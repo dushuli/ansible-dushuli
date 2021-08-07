@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wxh5
+  labels:
+    app: wxh5
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: wxh5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wxh5
+  labels:
+    app: wxh5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wxh5
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: wxh5
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: wxh5
+          image: "{{ wxh5_image }}"
+          env:
+            - name: DEPLOY_TIME
+              value: "{{ wxh5_time }}"
+            - name: APP_WEIXIN_OEPN_DOMAIN
+              value: "{{ wxh5_wechat_domain }}"
+            - name: APP_API_BASE
+              value: "{{ wxh5_api_path }}"
+            - name: APP_AUTH_BASE
+              value: "{{ wxh5_auth_path }}"
+            - name: APP_WX_PROVIDER
+              value: "{{ wxh5_wechat_provider }}"
+            - name: APP_PASSWORD_PROVIDER
+              value: "{{ wxh5_password_provider }}"
+            - name: APP_NAMESPACE
+              value: "{{ wxh5_ns }}"
+            - name: APP_WEIXIN_APPID
+              value: "{{ wxh5_wechat_app_id }}"
+            - name: APP_PRODUCT
+              value: "{{ wxh5_product }}"
+            - name: APP_DEFAULT_SHARE_IMAGE
+              value: "{{ wxh5_share_image }}"
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+            requests:
+              cpu: "10m"
+              memory: "32Mi"

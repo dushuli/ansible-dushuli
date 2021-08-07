@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: cron
+  labels:
+    app: cron
+spec:
+  template:
+    spec:
+      containers:
+        - name: cron
+          image: "{{ cron_image }}"
+          env:
+            - name: DEPLOY_TIME
+              value: "{{ cron_time }}"
+            - name: APP_PORT
+              value: "{{ cron_port }}"
+            - name: APP_BASE
+              value: "{{ cron_path }}"
+            - name: APP_WECHAT_OFFICIAL_APP_ID
+              value: "{{ cron_wechat_official_app_id }}"
+            - name: APP_WECHAT_OFFICIAL_APP_SECRET
+              value: "{{ cron_wechat_official_app_secret }}"
+            - name: APP_WECHAT_PAY_MCH_ID
+              value: "{{ cron_wechat_pay_mch_id }}"
+            - name: APP_WECHAT_PAY_PARTNER_KEY
+              value: "{{ cron_wechat_pay_partner_key }}"
+            - name: APP_WECHAT_PAY_NOTIFY_URL
+              value: "{{ cron_wechat_pay_notify_url }}"
+            - name: APP_WECHAT_APP_APP_ID
+              value: "{{ cron_wechat_app_id }}"
+            - name: APP_WECHAT_APP_APP_SECRET
+              value: "{{ cron_wechat_app_secret }}"
+            - name: APP_WECHAT_APP_TOKEN
+              value: "{{ cron_wechat_app_token }}"
+            - name: APP_WECHAT_APP_ENCODING_AES_KEY
+              value: "{{ cron_wechat_app_encoding_key }}"
+            - name: APP_CONTENT_BASE
+              value: "{{ cron_content_path }}"
+            - name: APP_MONGODB_CONNECTION
+              value: "{{ cron_mongodb_connection }}"
+          command: ["node"]
+          args:
+            - bin/cron.js
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+            requests:
+              cpu: "10m"
+              memory: "32Mi"
+      restartPolicy: Never

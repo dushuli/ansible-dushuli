@@ -1,0 +1,76 @@
+---
+# defaults file for dushuli
+namespace: dushuli
+state: present
+
+dushuli_state: "{{ state }}"
+dushuli_namespace: "{{ namespace }}"
+
+ingress_name: dushuli
+domain: dushuli.36node.com
+
+other_domain: www.yuewen365.com
+other_domain_name: yuewen365.com
+
+mongodb_connection: mongodb://root:it_is_a_secret@mongodb
+
+console_version: latest
+console_image: "registry.cn-hongkong.aliyuncs.com/36node/dushuli-console:{{ console_version }}"
+console_time: 20210804120000
+console_api_path: https://api.dushuli.36node.com/dushuli/v0
+console_auth_path: https://stargate.36node.com/api/auth/v0
+console_provider: 5cc159acd7fc56001270a72a
+console_ns: /dushuli
+console_wechat_host: https://www.yuewen365.com
+console_health_path: /
+
+core_version: latest
+core_image: "registry.cn-hongkong.aliyuncs.com/36node/dushuli-api:{{ core_version }}"
+core_time: 20210804120000
+core_port: "80"
+core_path: /dushuli/v0
+core_wechat_official_app_id: wxe8fc40117734ec1f
+core_wechat_official_app_secret: b75286f8096fdebf065aa8c79a3746bd
+core_wechat_pay_mch_id: "1527752781"
+core_wechat_pay_partner_key: 4tG7HUc784E2o49GChKyoqnrG2b7hTVF
+core_wechat_pay_notify_url: https://api.dushuli.36node.com/dushuli/v0/wechat/payment-callback
+core_wechat_app_id: wxbc6e84f450dfb210
+core_wechat_app_secret: 664ae6d75d84af6a4577bc431627d88c
+core_wechat_app_token: kECckzxoFyW96Qu293447i4AWKf8Zfpq
+core_wechat_app_encoding_key: BdPT4KtQzuuz9OCayed93F46ze1nVNWZl2dy5VrgUrq
+core_wechat_component_app_id: wxf78fbc9d6aa3c559
+core_wechat_component_app_secret: c4d8d98e69c69a317caf7388ee6eef29
+core_wechat_component_token: 36node
+core_wechat_component_key: ngtreM9ISILjnOVjIiXPK03IaR0MjLALbuYChbba6Cc
+core_mongodb_connection: "{{ mongodb_connection }}/core?authSource=admin"
+core_health_path: /dushuli/v0/health
+
+wxh5_version: latest
+wxh5_image: "registry.cn-hongkong.aliyuncs.com/36node/dushuli:{{ wxh5_version }}"
+wxh5_time: 20210804120000
+wxh5_wechat_domain: https://api.dushuli.36node.com
+wxh5_api_path: https://api.dushuli.36node.com/dushuli/v0
+wxh5_auth_path: https://stargate.36node.com/api/auth/v0
+wxh5_wechat_provider: 5cc11d75d7fc56001270a71e
+wxh5_password_provider: 5cc159acd7fc56001270a72a
+wxh5_ns: /dushuli
+wxh5_wechat_app_id: wxe8fc40117734ec1f
+wxh5_product: dushuliCalendar
+wxh5_share_image: https://dushuli-static.36node.com/wxapp/dushuli.png
+
+cron_version: latest
+cron_image: "registry.cn-hongkong.aliyuncs.com/36node/dushuli-api:{{ cron_version }}"
+cron_time: 20210804120000
+cron_port: "80"
+cron_path: /dushuli/v0-snapshot
+cron_wechat_official_app_id: wxe8fc40117734ec1f
+cron_wechat_official_app_secret: b75286f8096fdebf065aa8c79a3746bd
+cron_wechat_pay_mch_id: "1527752781"
+cron_wechat_pay_partner_key: 4tG7HUc784E2o49GChKyoqnrG2b7hTVF
+cron_wechat_pay_notify_url: https://api.yuewen365.com/dushuli/v0-snapshot/wechat/payment-callback
+cron_wechat_app_id: wxbc6e84f450dfb210
+cron_wechat_app_secret: 664ae6d75d84af6a4577bc431627d88c
+cron_wechat_app_token: kECckzxoFyW96Qu293447i4AWKf8Zfpq
+cron_wechat_app_encoding_key: BdPT4KtQzuuz9OCayed93F46ze1nVNWZl2dy5VrgUrq
+cron_content_path: https://api.zposter.36node.com/content/v0
+cron_mongodb_connection: "{{ mongodb_connection }}/core?cronSource=admin"

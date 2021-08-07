@@ -1,0 +1,99 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: core
+  labels:
+    app: core
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: core
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core
+  labels:
+    app: core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: core
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: core
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: core
+          image: "{{ core_image }}"
+          env:
+            - name: DEPLOY_TIME
+              value: "{{ core_time }}"
+            - name: APP_PORT
+              value: "{{ core_port }}"
+            - name: APP_BASE
+              value: "{{ core_path }}"
+            - name: APP_WECHAT_OFFICIAL_APP_ID
+              value: "{{ core_wechat_official_app_id }}"
+            - name: APP_WECHAT_OFFICIAL_APP_SECRET
+              value: "{{ core_wechat_official_app_secret }}"
+            - name: APP_WECHAT_PAY_MCH_ID
+              value: "{{ core_wechat_pay_mch_id }}"
+            - name: APP_WECHAT_PAY_PARTNER_KEY
+              value: "{{ core_wechat_pay_partner_key }}"
+            - name: APP_WECHAT_PAY_NOTIFY_URL
+              value: "{{ core_wechat_pay_notify_url }}"
+            - name: APP_WECHAT_APP_APP_ID
+              value: "{{ core_wechat_app_id }}"
+            - name: APP_WECHAT_APP_APP_SECRET
+              value: "{{ core_wechat_app_secret }}"
+            - name: APP_WECHAT_APP_TOKEN
+              value: "{{ core_wechat_app_token }}"
+            - name: APP_WECHAT_APP_ENCODING_AES_KEY
+              value: "{{ core_wechat_app_encoding_key }}"
+            - name: APP_WECHAT_COMPONENT_APPID
+              value: "{{ core_wechat_component_app_id }}"
+            - name: APP_WECHAT_COMPONENT_APPSECRET
+              value: "{{ core_wechat_component_app_secret }}"
+            - name: APP_WECHAT_COMPONENT_TOKEN
+              value: "{{ core_wechat_component_token }}"
+            - name: APP_WECHAT_COMPONENT_KEY
+              value: "{{ core_wechat_component_key }}"
+            - name: APP_MONGODB_CONNECTION
+              value: "{{ core_mongodb_connection }}"
+          ports:
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: "{{ core_health_path }}"
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 60
+          livenessProbe:
+            httpGet:
+              path: "{{ core_health_path }}"
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 60
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+            requests:
+              cpu: "10m"
+              memory: "32Mi"

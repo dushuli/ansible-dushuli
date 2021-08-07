@@ -1,0 +1,22 @@
+---
+# tasks file for dushuli
+- name: Namespace for dushuli
+  community.kubernetes.k8s:
+    state: "{{ dushuli_state }}"
+    name: "{{ dushuli_namespace }}"
+    api_version: v1
+    kind: Namespace
+
+- name: dushuli service
+  community.kubernetes.k8s:
+    state: "{{ dushuli_state }}"
+    namespace: "{{ dushuli_namespace }}"
+    template: "{{ item }}"
+  with_items:
+    - console.yml.j2
+    - core.yml.j2
+    - wxh5.yml.j2
+    - cron.yml.j2
+    - ingress.yml.j2
+  tags:
+    - dushuli

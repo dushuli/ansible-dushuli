@@ -1,0 +1,46 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: "{{ ingress_name }}"
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: "{{ cert_issuer }}"
+spec:
+  rules:
+    - host: "{{ other_domain }}"
+      http:
+        paths:
+          - backend:
+              serviceName: wxh5
+              servicePort: 80
+            path: /
+    - host: "{{ domain }}"
+      http:
+        paths:
+          - backend:
+              serviceName: wxh5
+              servicePort: 80
+            path: /
+    - host: console.{{ domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: console
+              servicePort: 80
+            path: /
+    - host: api.{{ domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: core
+              servicePort: 80
+            path: "{{ core_path }}" # 应改成 core或者某个具体的服务名
+  tls:
+    - hosts:
+        - "{{ other_domain }}"
+      secretName: "{{ other_domain_name }}"
+    - hosts:
+        - "{{ domain }}"
+        - "*.{{ domain }}"
+      secretName: "{{ domain }}"

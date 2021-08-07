@@ -1,0 +1,79 @@
+---
+# defaults file for dushuli
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: console
+  labels:
+    app: console
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: console
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: console
+  labels:
+    app: console
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: console
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: console
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: console
+          image: "{{ console_image }}"
+          env:
+            - name: DEPLOY_TIME
+              value: "{{ console_time }}"
+            - name: APP_API_BASE
+              value: "{{ console_api_path }}"
+            - name: APP_AUTH_BASE
+              value: "{{ console_auth_path }}"
+            - name: APP_PROVIDER
+              value: "{{ console_provider }}"
+            - name: APP_NAMESPACE
+              value: "{{ console_ns }}"
+            - name: APP_WECHAT_HOST
+              value: "{{ console_wechat_host }}"
+          ports:
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: "{{ console_health_path }}"
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 60
+          livenessProbe:
+            httpGet:
+              path: "{{ console_health_path }}"
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 60
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+            requests:
+              cpu: "10m"
+              memory: "32Mi"
