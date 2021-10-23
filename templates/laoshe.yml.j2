@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: laoshe
+  labels:
+    app: laoshe
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: laoshe
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laoshe
+  labels:
+    app: laoshe
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: laoshe
+  template:
+    metadata:
+      labels:
+        app: laoshe
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: laoshe
+          image: "registry.cn-beijing.aliyuncs.com/36node/app-on-building:main"
+          imagePullPolicy: "{{ image_pull_policy }}"
+          env:
+            - name: DEPLOY_TIME
+              value: "{{ laoshe_time }}"
+            - name: REACT_APP_ECHO
+              value: "true"
+            - name: REACT_APP_TITLE
+              value: "老生茶舍雷龙"
+            - name: REACT_APP_COPYRIGHT
+              value: "老生茶舍雷龙2021"
+            - name: REACT_APP_BEIAN
+              value: "鲁ICP备13020108号-3"
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+            requests:
+              cpu: "10m"
+              memory: "32Mi"

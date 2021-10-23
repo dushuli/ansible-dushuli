@@ -15,6 +15,13 @@ spec:
               serviceName: wxh5
               servicePort: 80
             path: /
+    - host: "yuewen365.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: wxh5
+              servicePort: 80
+            path: /
     - host: "{{ domain }}"
       http:
         paths:

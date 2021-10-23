@@ -1,0 +1,59 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: "leilong"
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: "leilong.com.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: leilong
+              servicePort: 80
+            path: /
+    - host: "lei-long.com.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: leilong
+              servicePort: 80
+            path: /
+    - host: "lei-long.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: leilong
+              servicePort: 80
+            path: /
+    - host: "lei-long.com"
+      http:
+        paths:
+          - backend:
+              serviceName: leilong
+              servicePort: 80
+            path: /
+    - host: "leilongwang.com"
+      http:
+        paths:
+          - backend:
+              serviceName: leilong
+              servicePort: 80
+            path: /
+    - host: "leilongwang.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: leilong
+              servicePort: 80
+            path: /
+    - host: "leilongwang.com.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: leilong
+              servicePort: 80
+            path: /
+            

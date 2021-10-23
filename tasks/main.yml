@@ -18,5 +18,11 @@
     - wxh5.yml.j2
     - cron.yml.j2
     - ingress.yml.j2
+    - leilong-ingress.yml.j2
+    - leilong.yml.j2
+    - laoshe-ingress.yml.j2
+    - laoshe.yml.j2
+    - nvshen-ingress.yml.j2
+    - nvshen.yml.j2
   tags:
     - dushuli

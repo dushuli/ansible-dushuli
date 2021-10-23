@@ -2,6 +2,7 @@
 # defaults file for dushuli
 namespace: dushuli
 state: present
+image_pull_policy: Always
 
 dushuli_state: "{{ state }}"
 dushuli_namespace: "{{ namespace }}"
@@ -74,3 +75,7 @@ cron_wechat_app_token: kECckzxoFyW96Qu293447i4AWKf8Zfpq
 cron_wechat_app_encoding_key: BdPT4KtQzuuz9OCayed93F46ze1nVNWZl2dy5VrgUrq
 cron_content_path: https://api.zposter.36node.com/content/v0
 cron_mongodb_connection: "{{ mongodb_connection }}/core?cronSource=admin"
+
+leilong_time: "202110231914"
+laoshe_time: "202110231914"
+nvshen_time: "202110231914"

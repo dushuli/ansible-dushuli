@@ -1,0 +1,51 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: "laoshe"
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: "laoshengchashe.com"
+      http:
+        paths:
+          - backend:
+              serviceName: laoshe
+              servicePort: 80
+            path: /
+    - host: "laoshengcha.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: laoshe
+              servicePort: 80
+            path: /
+    - host: "laoshengcha.com.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: laoshe
+              servicePort: 80
+            path: /
+    - host: "laoshengcha.com"
+      http:
+        paths:
+          - backend:
+              serviceName: laoshe
+              servicePort: 80
+            path: /
+    - host: "laoshengchashe.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: laoshe
+              servicePort: 80
+            path: /
+    - host: "laoshengchashe.com.cn"
+      http:
+        paths:
+          - backend:
+              serviceName: laoshe
+              servicePort: 80
+            path: /
