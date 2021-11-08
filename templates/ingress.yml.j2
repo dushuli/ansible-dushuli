@@ -48,6 +48,6 @@ spec:
         - "{{ other_domain }}"
       secretName: "{{ other_domain_name }}"
     - hosts:
-        - "{{ domain }}"
-        - "*.{{ domain }}"
+        - "console.{{ domain }}"
+        - "api.{{ domain }}"
       secretName: "{{ domain }}"
