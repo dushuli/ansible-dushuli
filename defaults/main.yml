@@ -20,6 +20,7 @@ console_image: "registry.cn-beijing.aliyuncs.com/36node/dushuli-console:{{ conso
 console_time: 20210804120000
 console_api_path: https://api.dushuli.36node.com/dushuli/v0
 console_auth_path: https://stargate.36node.com/api/auth/v0
+console_content_path: https://api.zposter.36node.com/content/v0
 console_provider: 5cc159acd7fc56001270a72a
 console_ns: /dushuli
 console_wechat_host: https://www.yuewen365.com
