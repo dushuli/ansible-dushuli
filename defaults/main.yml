@@ -48,7 +48,7 @@ core_mongodb_connection: "{{ mongodb_connection }}/core?authSource=admin"
 core_health_path: /dushuli/v0/health
 
 wxh5_version: latest
-wxh5_image: "registry.cn-hongkong.aliyuncs.com/36node/dushuli:{{ wxh5_version }}"
+wxh5_image: "registry.cn-beijing.aliyuncs.com/36node/dushuli-wxh5:{{ wxh5_version }}"
 wxh5_time: 20210804120000
 wxh5_wechat_domain: https://api.dushuli.36node.com
 wxh5_api_path: https://api.dushuli.36node.com/dushuli/v0
