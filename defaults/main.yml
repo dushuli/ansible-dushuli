@@ -2,7 +2,9 @@
 # defaults file for dushuli
 namespace: dushuli
 state: present
+tls_enabled: true
 image_pull_policy: Always
+cert_issuer: letsencrypt-http
 
 dushuli_state: "{{ state }}"
 dushuli_namespace: "{{ namespace }}"

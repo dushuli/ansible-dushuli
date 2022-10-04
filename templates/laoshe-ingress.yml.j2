@@ -1,5 +1,5 @@
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: "laoshe"
@@ -7,45 +7,63 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-    - host: "laoshengchashe.com"
+    - host: laoshengchashe.com
       http:
         paths:
-          - backend:
-              serviceName: laoshe
-              servicePort: 80
-            path: /
-    - host: "laoshengcha.cn"
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: laoshe
+                port:
+                  number: 80
+    - host: laoshengcha.cn
       http:
         paths:
-          - backend:
-              serviceName: laoshe
-              servicePort: 80
-            path: /
-    - host: "laoshengcha.com.cn"
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: laoshe
+                port:
+                  number: 80
+    - host: laoshengcha.com.cn
       http:
         paths:
-          - backend:
-              serviceName: laoshe
-              servicePort: 80
-            path: /
-    - host: "laoshengcha.com"
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: laoshe
+                port:
+                  number: 80
+    - host: laoshengcha.com
       http:
         paths:
-          - backend:
-              serviceName: laoshe
-              servicePort: 80
-            path: /
-    - host: "laoshengchashe.cn"
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: laoshe
+                port:
+                  number: 80
+    - host: laoshengchashe.cn
       http:
         paths:
-          - backend:
-              serviceName: laoshe
-              servicePort: 80
-            path: /
-    - host: "laoshengchashe.com.cn"
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: laoshe
+                port:
+                  number: 80
+    - host: laoshengchashe.com.cn
       http:
         paths:
-          - backend:
-              serviceName: laoshe
-              servicePort: 80
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: laoshe
+                port:
+                  number: 80

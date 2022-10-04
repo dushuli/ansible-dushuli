@@ -1,48 +1,79 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-path-prefix
+spec:
+  stripPrefix:
+    forceSlash: false
+    prefixes:
+      - /api
+
+---
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: "{{ ingress_name }}"
   annotations:
-    kubernetes.io/ingress.class: traefik
+    kubernetes.io/ingress.class: "{{ ingress_class }}"
+{% if tls_enabled %}
     cert-manager.io/cluster-issuer: "{{ cert_issuer }}"
+{% endif %}
+    traefik.ingress.kubernetes.io/router.middlewares: "{{ namespace }}-strip-path-prefix@kubernetescrd"
 spec:
   rules:
     - host: "{{ other_domain }}"
       http:
         paths:
-          - backend:
-              serviceName: wxh5
-              servicePort: 80
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wxh5
+                port:
+                  number: 80
     - host: "yuewen365.cn"
       http:
         paths:
-          - backend:
-              serviceName: wxh5
-              servicePort: 80
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wxh5
+                port:
+                  number: 80
     - host: "{{ domain }}"
       http:
         paths:
-          - backend:
-              serviceName: wxh5
-              servicePort: 80
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wxh5
+                port:
+                  number: 80
     - host: console.{{ domain }}
       http:
         paths:
-          - backend:
-              serviceName: console
-              servicePort: 80
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: console
+                port:
+                  number: 80
     - host: api.{{ domain }}
       http:
         paths:
-          - backend:
-              serviceName: core
-              servicePort: 80
-            path: "{{ core_path }}" # 应改成 core或者某个具体的服务名
+          - path: "{{ core_path }}"
+            pathType: Prefix
+            backend:
+              service:
+                name: core
+                port:
+                  number: 80
+{% if tls_enabled %}
   tls:
     - hosts:
         - "{{ other_domain }}"
@@ -51,3 +82,4 @@ spec:
         - "console.{{ domain }}"
         - "api.{{ domain }}"
       secretName: "{{ domain }}"
+{% endif %}

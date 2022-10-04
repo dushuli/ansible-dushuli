@@ -1,5 +1,5 @@
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: "nvshen"
@@ -10,21 +10,30 @@ spec:
     - host: "immissi.cn"
       http:
         paths:
-          - backend:
-              serviceName: nvshen
-              servicePort: 80
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nvshen
+                port:
+                  number: 80
     - host: "immissi.com"
       http:
         paths:
-          - backend:
-              serviceName: nvshen
-              servicePort: 80
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nvshen
+                port:
+                  number: 80
     - host: "youyanvren.com.cn"
       http:
         paths:
-          - backend:
-              serviceName: nvshen
-              servicePort: 80
-            path: /
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nvshen
+                port:
+                  number: 80
