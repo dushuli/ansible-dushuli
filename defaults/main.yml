@@ -5,6 +5,7 @@ state: present
 tls_enabled: true
 image_pull_policy: Always
 cert_issuer: letsencrypt-http
+ingress_class: traefik
 
 dushuli_state: "{{ state }}"
 dushuli_namespace: "{{ namespace }}"
